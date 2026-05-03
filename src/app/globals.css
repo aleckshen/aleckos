@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Surfaces — layered dark to light for depth */
+  --color-desktop-bg: #1a1b26; /* base bg */
+  --color-taskbar-bg: #16161e; /* deepest — sits below everything */
+  --color-window-bg: #1f2335; /* slightly elevated */
+  --color-titlebar-bg: #24283b; /* most elevated chrome */
+  --color-window-border: #414868; /* terminal_black */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Terminal */
+  --color-terminal-bg: #1a1b26;
+  --color-terminal-fg: #c0caf5; /* soft snow-blue */
+  --color-terminal-dim: #565f89; /* comment color */
+  --color-terminal-accent: #7aa2f7; /* signature Tokyo Night blue */
+  --color-terminal-purple: #bb9af7; /* magenta — keywords vibe */
+  --color-terminal-cyan: #7dcfff; /* cyan — secondary accent */
+
+  /* Semantic */
+  --color-terminal-error: #f7768e; /* red */
+  --color-terminal-warning: #e0af68; /* yellow */
+  --color-terminal-success: #9ece6a; /* green */
+
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-desktop-bg);
+  color: var(--color-terminal-fg);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  margin: 0;
+}
+
+::selection {
+  background: var(--color-terminal-accent);
+  color: var(--color-terminal-bg);
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-terminal-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-terminal-dim);
+  border-radius: 3px;
 }
