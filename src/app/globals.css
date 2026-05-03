@@ -21,7 +21,7 @@
   --color-terminal-warning: #e0af68; /* yellow */
   --color-terminal-success: #9ece6a; /* green */
 
-  --font-mono: "JetBrains Mono", monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 body {
