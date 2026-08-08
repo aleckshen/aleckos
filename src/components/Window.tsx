@@ -24,8 +24,8 @@ export function Window({ window, children }: Props) {
       onDragStop={(_, d) => updateGeometry(window.id, { x: d.x, y: d.y })}
       onResizeStop={(_, __, ref, ___, pos) =>
         updateGeometry(window.id, {
-          width: parseInt(ref.style.width),
-          height: parseInt(ref.style.height),
+          width: parseInt(ref.style.width, 10),
+          height: parseInt(ref.style.height, 10),
           x: pos.x,
           y: pos.y,
         })
@@ -38,10 +38,12 @@ export function Window({ window, children }: Props) {
           <span className="text-terminal-fg">{window.title}</span>
           <div className="flex gap-2">
             <button
+              type="button"
               onClick={() => toggleMinimize(window.id)}
               className="h-3 w-3 rounded-full bg-yellow-500"
             />
             <button
+              type="button"
               onClick={() => closeWindow(window.id)}
               className="h-3 w-3 rounded-full bg-red-500"
             />
