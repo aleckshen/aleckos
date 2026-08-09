@@ -13,7 +13,7 @@ export type WindowState = {
   minimized: boolean;
 };
 
-type TerminalLine = { input: string; output: string };
+type TerminalLine = { id: string; input: string; output: string };
 
 type UIState = {
   windows: WindowState[];
@@ -29,7 +29,7 @@ type UIState = {
     geom: Partial<Pick<WindowState, "x" | "y" | "width" | "height">>,
   ) => void;
 
-  pushTerminalLine: (line: TerminalLine) => void;
+  pushTerminalLine: (line: Omit<TerminalLine, "id">) => void;
   clearTerminal: () => void;
 };
 
@@ -95,6 +95,11 @@ export const useUIStore = create<UIState>((set) => ({
     })),
 
   pushTerminalLine: (line) =>
-    set((s) => ({ terminalHistory: [...s.terminalHistory, line] })),
+    set((s) => ({
+      terminalHistory: [
+        ...s.terminalHistory,
+        { ...line, id: crypto.randomUUID() },
+      ],
+    })),
   clearTerminal: () => set({ terminalHistory: [] }),
 }));

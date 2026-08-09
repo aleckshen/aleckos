@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useUIStore } from "@/stores/uiStore";
 import { runCommand } from "@/lib/commands";
+import { useUIStore } from "@/stores/uiStore";
 
 const motd = `aleck-os v1.0 — type 'help' to get started.\n`;
 
@@ -9,12 +9,11 @@ export function Terminal() {
   const { terminalHistory, pushTerminalLine, clearTerminal, openWindow } =
     useUIStore();
   const [input, setInput] = useState("");
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLLabelElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, [terminalHistory]);
+  }, []);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -36,14 +35,14 @@ export function Terminal() {
   }
 
   return (
-    <div
-      className="h-full bg-terminal-bg p-3 text-sm"
-      onClick={() => inputRef.current?.focus()}
+    <label
+      className="block h-full bg-terminal-bg p-3 text-sm"
+      htmlFor="terminal-input"
       ref={scrollRef}
     >
       <pre className="whitespace-pre-wrap text-terminal-dim">{motd}</pre>
-      {terminalHistory.map((line, i) => (
-        <div key={i}>
+      {terminalHistory.map((line) => (
+        <div key={line.id}>
           <div>
             <span className="text-terminal-accent">guest@aleck-os</span>
             <span className="text-terminal-dim">:~$ </span>
@@ -58,14 +57,13 @@ export function Terminal() {
         <span className="text-terminal-accent">guest@aleck-os</span>
         <span className="text-terminal-dim">:~$&nbsp;</span>
         <input
-          ref={inputRef}
-          autoFocus
+          id="terminal-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 bg-transparent outline-none"
           spellCheck={false}
         />
       </form>
-    </div>
+    </label>
   );
 }
