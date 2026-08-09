@@ -1,3 +1,9 @@
+import { Terminal } from "@/components/apps/Terminal";
+
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <Terminal />
+    </div>
+  );
 }
