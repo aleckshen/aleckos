@@ -17,7 +17,7 @@ export function Taskbar() {
   const now = useClock();
 
   return (
-    <div className="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-window-border bg-taskbar-bg px-3 py-1.5 text-sm">
+    <div className="absolute inset-x-0 bottom-0 flex h-12 items-center justify-between border-t border-window-border bg-taskbar-bg px-3 text-sm">
       <div className="flex gap-2">
         {windows.map((w) => (
           <button

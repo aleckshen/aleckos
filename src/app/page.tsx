@@ -1,11 +1,5 @@
-import { Terminal } from "@/components/apps/Terminal";
-import { Taskbar } from "@/components/Taskbar";
+import { Desktop } from "@/components/Desktop";
 
 export default function Home() {
-  return (
-    <div>
-      <Terminal />
-      <Taskbar />
-    </div>
-  );
+  return <Desktop />;
 }
