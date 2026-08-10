@@ -62,6 +62,9 @@ export function Terminal() {
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 bg-transparent outline-none"
           spellCheck={false}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
         />
       </form>
     </label>
