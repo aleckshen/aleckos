@@ -47,9 +47,13 @@ export function Window({ window, children }: Props) {
       onMouseDown={() => focusWindow(window.id)}
     >
       <div className="flex h-full flex-col rounded-md border border-window-border bg-window-bg shadow-xl">
-        <div className="window-drag-handle flex items-center justify-between bg-titlebar-bg px-3 py-1.5 text-sm">
-          <span className="text-terminal-fg">{window.title}</span>
+        <div className="window-drag-handle relative flex items-center bg-titlebar-bg px-3 py-1.5 text-sm">
           <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => closeWindow(window.id)}
+              className="h-3 w-3 rounded-full bg-red-500"
+            />
             <button
               type="button"
               onClick={() => toggleMinimize(window.id)}
@@ -60,12 +64,10 @@ export function Window({ window, children }: Props) {
               onClick={() => toggleMaximize(window.id)}
               className="h-3 w-3 rounded-full bg-green-500"
             />
-            <button
-              type="button"
-              onClick={() => closeWindow(window.id)}
-              className="h-3 w-3 rounded-full bg-red-500"
-            />
           </div>
+          <span className="pointer-events-none absolute inset-x-0 text-center text-terminal-fg">
+            {window.title}
+          </span>
         </div>
         <div className="flex-1 overflow-auto">{children}</div>
       </div>
