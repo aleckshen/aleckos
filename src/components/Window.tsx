@@ -8,18 +8,31 @@ type Props = {
 };
 
 export function Window({ window, children }: Props) {
-  const { closeWindow, focusWindow, toggleMinimize, updateGeometry } =
-    useUIStore();
+  const {
+    closeWindow,
+    focusWindow,
+    toggleMinimize,
+    toggleMaximize,
+    updateGeometry,
+  } = useUIStore();
 
   if (window.minimized) return null;
 
   return (
     <Rnd
-      size={{ width: window.width, height: window.height }}
-      position={{ x: window.x, y: window.y }}
+      size={
+        window.maximized
+          ? { width: "100%", height: "100%" }
+          : { width: window.width, height: window.height }
+      }
+      position={
+        window.maximized ? { x: 0, y: 0 } : { x: window.x, y: window.y }
+      }
       minWidth={320}
       minHeight={200}
       bounds="parent"
+      disableDragging={window.maximized}
+      enableResizing={!window.maximized}
       dragHandleClassName="window-drag-handle"
       onDragStop={(_, d) => updateGeometry(window.id, { x: d.x, y: d.y })}
       onResizeStop={(_, __, ref, ___, pos) =>
@@ -41,6 +54,11 @@ export function Window({ window, children }: Props) {
               type="button"
               onClick={() => toggleMinimize(window.id)}
               className="h-3 w-3 rounded-full bg-yellow-500"
+            />
+            <button
+              type="button"
+              onClick={() => toggleMaximize(window.id)}
+              className="h-3 w-3 rounded-full bg-green-500"
             />
             <button
               type="button"

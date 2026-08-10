@@ -11,6 +11,8 @@ export type WindowState = {
   height: number;
   zIndex: number;
   minimized: boolean;
+  maximized: boolean;
+  prevGeometry?: { x: number; y: number; width: number; height: number };
 };
 
 type TerminalLine = { id: string; input: string; output: string };
@@ -24,6 +26,7 @@ type UIState = {
   closeWindow: (id: AppId) => void;
   focusWindow: (id: AppId) => void;
   toggleMinimize: (id: AppId) => void;
+  toggleMaximize: (id: AppId) => void;
   updateGeometry: (
     id: AppId,
     geom: Partial<Pick<WindowState, "x" | "y" | "width" | "height">>,
@@ -62,6 +65,7 @@ export const useUIStore = create<UIState>((set) => ({
             height: 420,
             zIndex: newZ,
             minimized: false,
+            maximized: false,
           },
         ],
         topZ: newZ,
@@ -92,6 +96,26 @@ export const useUIStore = create<UIState>((set) => ({
   updateGeometry: (id, geom) =>
     set((s) => ({
       windows: s.windows.map((w) => (w.id === id ? { ...w, ...geom } : w)),
+    })),
+
+  toggleMaximize: (id) =>
+    set((s) => ({
+      windows: s.windows.map((w) => {
+        if (w.id !== id) return w;
+        if (w.maximized) {
+          return {
+            ...w,
+            ...(w.prevGeometry ?? {}),
+            maximized: false,
+            prevGeometry: undefined,
+          };
+        }
+        return {
+          ...w,
+          maximized: true,
+          prevGeometry: { x: w.x, y: w.y, width: w.width, height: w.height },
+        };
+      }),
     })),
 
   pushTerminalLine: (line) =>
