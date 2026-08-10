@@ -47,7 +47,7 @@ export function Window({ window, children }: Props) {
       onMouseDown={() => focusWindow(window.id)}
     >
       <div className="flex h-full flex-col rounded-md border border-window-border bg-window-bg shadow-xl">
-        <div className="window-drag-handle relative flex items-center bg-titlebar-bg px-3 py-1.5 text-sm">
+        <div className="window-drag-handle relative flex items-center bg-titlebar-bg px-3 py-2.5 text-sm">
           <div className="flex gap-2">
             <button
               type="button"
