@@ -1,6 +1,7 @@
 "use client";
 import { aboutLong, experienceLong, projectsLong } from "@/content/longform";
 import { useUIStore } from "@/stores/uiStore";
+import { Files } from "./apps/Files";
 import { Terminal } from "./apps/Terminal";
 import { TextViewer } from "./apps/TextViewer";
 import { DesktopIcon } from "./DesktopIcon";
@@ -13,15 +14,14 @@ export function Desktop() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-desktop-bg">
       <div className="absolute left-4 top-4 grid grid-cols-1 gap-3">
-        <DesktopIcon id="terminal" title="Terminal" emoji="▶_" />
-        <DesktopIcon id="about" title="About" emoji="👤" />
-        <DesktopIcon id="projects" title="Projects" emoji="📁" />
-        <DesktopIcon id="experience" title="Experience" emoji="💼" />
+        <DesktopIcon id="terminal" title="Terminal" emoji=">_" />
+        <DesktopIcon id="files" title="Files" emoji="📁" />
       </div>
 
       {windows.map((w) => (
         <Window key={w.id} window={w}>
           {w.id === "terminal" && <Terminal />}
+          {w.id === "files" && <Files />}
           {w.id === "about" && <TextViewer content={aboutLong} />}
           {w.id === "projects" && <TextViewer content={projectsLong} />}
           {w.id === "experience" && <TextViewer content={experienceLong} />}

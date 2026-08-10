@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type AppId = "terminal" | "about" | "projects" | "experience";
+export type AppId = "terminal" | "files" | "about" | "projects" | "experience";
 
 export type WindowState = {
   id: AppId;
