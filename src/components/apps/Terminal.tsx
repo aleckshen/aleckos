@@ -13,7 +13,7 @@ export function Terminal() {
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, []);
+  });
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -36,7 +36,7 @@ export function Terminal() {
 
   return (
     <label
-      className="block h-full bg-terminal-bg p-3 text-sm"
+      className="block h-full overflow-y-auto bg-terminal-bg p-3 text-sm"
       htmlFor="terminal-input"
       ref={scrollRef}
     >
