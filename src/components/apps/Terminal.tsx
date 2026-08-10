@@ -56,16 +56,23 @@ export function Terminal() {
       <form onSubmit={submit} className="flex">
         <span className="text-terminal-accent">guest@aleck-os</span>
         <span className="text-terminal-dim">:~$&nbsp;</span>
-        <input
-          id="terminal-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 bg-transparent outline-none"
-          spellCheck={false}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-        />
+        <span className="relative h-5 flex-1">
+          <input
+            id="terminal-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="w-full bg-transparent caret-transparent outline-none"
+            spellCheck={false}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+          />
+          <span
+            aria-hidden="true"
+            className="cursor-blink pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-terminal-fg"
+            style={{ left: `${input.length}ch` }}
+          />
+        </span>
       </form>
     </label>
   );
