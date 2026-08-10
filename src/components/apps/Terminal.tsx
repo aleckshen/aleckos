@@ -73,7 +73,7 @@ export function Terminal() {
             onClick={(e) => syncCaret(e.currentTarget)}
             onKeyUp={(e) => syncCaret(e.currentTarget)}
             onSelect={(e) => syncCaret(e.currentTarget)}
-            className="w-full bg-transparent caret-transparent outline-none"
+            className="peer w-full bg-transparent caret-transparent outline-none"
             spellCheck={false}
             autoComplete="off"
             autoCorrect="off"
@@ -81,7 +81,7 @@ export function Terminal() {
           />
           <span
             aria-hidden="true"
-            className="cursor-blink pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-terminal-fg"
+            className="cursor-blink invisible pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-terminal-fg peer-focus:visible"
             style={{ left: `${caret}ch` }}
           />
         </span>
