@@ -11,7 +11,7 @@ export function Files() {
   const openWindow = useUIStore((s) => s.openWindow);
   return (
     <div className="h-full text-sm">
-      <div className="border-b border-window-border px-3 py-1.5 text-xs text-terminal-dim">
+      <div className="border-b border-window-border px-3 py-1.5 text-terminal-dim">
         ~/documents
       </div>
       <div>
