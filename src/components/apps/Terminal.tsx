@@ -9,7 +9,12 @@ export function Terminal() {
   const { terminalHistory, pushTerminalLine, clearTerminal, openWindow } =
     useUIStore();
   const [input, setInput] = useState("");
+  const [caret, setCaret] = useState(0);
   const scrollRef = useRef<HTMLLabelElement>(null);
+
+  function syncCaret(el: HTMLInputElement) {
+    setCaret(el.selectionStart ?? el.value.length);
+  }
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -32,6 +37,7 @@ export function Terminal() {
       pushTerminalLine({ input, output: result.output });
     }
     setInput("");
+    setCaret(0);
   }
 
   return (
@@ -60,7 +66,13 @@ export function Terminal() {
           <input
             id="terminal-input"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              syncCaret(e.target);
+            }}
+            onClick={(e) => syncCaret(e.currentTarget)}
+            onKeyUp={(e) => syncCaret(e.currentTarget)}
+            onSelect={(e) => syncCaret(e.currentTarget)}
             className="w-full bg-transparent caret-transparent outline-none"
             spellCheck={false}
             autoComplete="off"
@@ -70,7 +82,7 @@ export function Terminal() {
           <span
             aria-hidden="true"
             className="cursor-blink pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-terminal-fg"
-            style={{ left: `${input.length}ch` }}
+            style={{ left: `${caret}ch` }}
           />
         </span>
       </form>
