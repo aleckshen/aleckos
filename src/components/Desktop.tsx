@@ -14,8 +14,8 @@ export function Desktop() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-desktop-bg">
       <div className="absolute left-4 top-4 grid grid-cols-1 gap-3">
-        <DesktopIcon id="terminal" title="Terminal" emoji=">_" />
-        <DesktopIcon id="files" title="Files" emoji="📁" />
+        <DesktopIcon id="terminal" title="aleck's terminal" emoji=">_" />
+        <DesktopIcon id="files" title="file manager" emoji="📁" />
       </div>
 
       {windows.map((w) => (
