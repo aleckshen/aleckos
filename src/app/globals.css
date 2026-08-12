@@ -49,6 +49,15 @@ body {
   border-radius: 3px;
 }
 
+.prose pre {
+  background-color: var(--color-titlebar-bg);
+}
+
+.prose pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
 @keyframes terminal-blink {
   0%,
   100% {
