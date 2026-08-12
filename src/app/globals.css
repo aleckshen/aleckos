@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "highlight.js/styles/tokyo-night-dark.css";
+@plugin "@tailwindcss/typography";
 
 @theme inline {
   /* Surfaces — layered dark to light for depth */
