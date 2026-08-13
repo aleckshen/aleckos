@@ -21,20 +21,20 @@ export function Taskbar() {
       <div className="flex items-center gap-3">
         <span className="font-semibold text-terminal-dim">aleckos</span>
         <span className="h-4 w-px bg-window-border" />
-        <div className="flex gap-2">
-          {windows.map((w) => (
+        {windows.map((w) => (
+          <div key={w.id} className="flex items-center gap-3">
             <button
-              key={w.id}
               type="button"
               onClick={() =>
                 w.minimized ? focusWindow(w.id) : toggleMinimize(w.id)
               }
-              className={`rounded px-3 py-1 ${w.minimized ? "text-terminal-dim" : "bg-window-bg text-terminal-fg"}`}
+              className={w.minimized ? "text-terminal-dim" : "text-terminal-fg"}
             >
               {w.title}
             </button>
-          ))}
-        </div>
+            <span className="h-4 w-px bg-window-border" />
+          </div>
+        ))}
       </div>
       <div className="flex items-center gap-3">
         <span className="h-4 w-px bg-window-border" />
