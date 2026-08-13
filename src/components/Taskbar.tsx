@@ -28,7 +28,7 @@ export function Taskbar() {
               onClick={() =>
                 w.minimized ? focusWindow(w.id) : toggleMinimize(w.id)
               }
-              className={w.minimized ? "text-terminal-dim" : "text-terminal-fg"}
+              className={`transition-colors ${w.minimized ? "text-terminal-dim hover:text-terminal-fg" : "text-terminal-fg"}`}
             >
               {w.title}
             </button>
