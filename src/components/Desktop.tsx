@@ -1,6 +1,7 @@
 "use client";
+import { useState } from "react";
 import { aboutLong, experienceLong, projectsLong } from "@/content/longform";
-import { useUIStore } from "@/stores/uiStore";
+import { type AppId, useUIStore } from "@/stores/uiStore";
 import { Files } from "./apps/Files";
 import { Terminal } from "./apps/Terminal";
 import { TextViewer } from "./apps/TextViewer";
@@ -10,12 +11,32 @@ import { Window } from "./Window";
 
 export function Desktop() {
   const windows = useUIStore((s) => s.windows);
+  const [selectedIcon, setSelectedIcon] = useState<AppId | null>(null);
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-desktop-bg">
+    // biome-ignore lint/a11y/noStaticElementInteractions: click-off-to-deselect convenience, not a real control
+    // biome-ignore lint/a11y/useKeyWithClickEvents: no keyboard equivalent needed
+    <div
+      className="relative h-screen w-screen overflow-hidden bg-desktop-bg"
+      onClick={() => setSelectedIcon(null)}
+    >
       <div className="absolute left-4 top-4 grid grid-cols-1 gap-3">
-        <DesktopIcon id="terminal" title="aleck's terminal" emoji=">_" />
-        <DesktopIcon id="files" title="file manager" emoji="📁" />
+        <DesktopIcon
+          id="terminal"
+          title="aleck's terminal"
+          emoji=">_"
+          selected={selectedIcon === "terminal"}
+          onSelect={() => setSelectedIcon("terminal")}
+          onOpen={() => setSelectedIcon(null)}
+        />
+        <DesktopIcon
+          id="files"
+          title="file manager"
+          emoji="📁"
+          selected={selectedIcon === "files"}
+          onSelect={() => setSelectedIcon("files")}
+          onOpen={() => setSelectedIcon(null)}
+        />
       </div>
 
       {windows.map((w) => (
