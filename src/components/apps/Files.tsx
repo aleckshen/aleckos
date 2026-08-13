@@ -2,9 +2,9 @@
 import { type AppId, useUIStore } from "@/stores/uiStore";
 
 const files: { id: AppId; title: string; name: string }[] = [
-  { id: "about", title: "About", name: "about.md" },
-  { id: "projects", title: "Projects", name: "projects.md" },
-  { id: "experience", title: "Experience", name: "experience.md" },
+  { id: "about", title: "about", name: "about.md" },
+  { id: "projects", title: "projects", name: "projects.md" },
+  { id: "experience", title: "experience", name: "experience.md" },
 ];
 
 export function Files() {
