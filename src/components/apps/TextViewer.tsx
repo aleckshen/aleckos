@@ -7,7 +7,7 @@ type Props = { content: string };
 
 export function TextViewer({ content }: Props) {
   return (
-    <div className="prose prose-invert h-full max-w-none p-6">
+    <div className="prose prose-invert min-h-full max-w-none p-6 pb-10">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
