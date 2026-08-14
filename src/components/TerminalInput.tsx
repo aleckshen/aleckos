@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   /** Must match the htmlFor of the wrapping label, so clicking focuses this. */
   id: string;
   value: string;
   onChange: (value: string) => void;
+  /** Focus the input as soon as it mounts. */
+  focusOnMount?: boolean;
 };
 
 /**
@@ -13,11 +15,21 @@ type Props = {
  * replaced with a blinking block that tracks the real cursor position and
  * only shows while the input is focused.
  */
-export function TerminalInput({ id, value, onChange }: Props) {
+export function TerminalInput({
+  id,
+  value,
+  onChange,
+  focusOnMount = false,
+}: Props) {
   const [caret, setCaret] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Clamped so the block snaps back when the parent clears the value.
   const caretPos = Math.min(caret, value.length);
+
+  useEffect(() => {
+    if (focusOnMount) inputRef.current?.focus();
+  }, [focusOnMount]);
 
   function syncCaret(el: HTMLInputElement) {
     setCaret(el.selectionStart ?? el.value.length);
@@ -27,6 +39,7 @@ export function TerminalInput({ id, value, onChange }: Props) {
     <span className="relative h-5 flex-1">
       <input
         id={id}
+        ref={inputRef}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);

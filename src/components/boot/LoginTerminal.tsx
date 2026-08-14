@@ -33,7 +33,12 @@ export function LoginTerminal() {
 
       <form onSubmit={submit} className="flex">
         <span className="">$&nbsp;</span>
-        <TerminalInput id="login-input" value={input} onChange={setInput} />
+        <TerminalInput
+          id="login-input"
+          value={input}
+          onChange={setInput}
+          focusOnMount
+        />
       </form>
     </label>
   );
