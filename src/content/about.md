@@ -1,4 +1,4 @@
-## whoami
+## about me
 
 ```ts
 const aleck = {
