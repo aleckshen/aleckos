@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
+import { Files } from "@/components/apps/Files";
+import { Terminal } from "@/components/apps/Terminal";
+import { TextViewer } from "@/components/apps/TextViewer";
 import { aboutLong, experienceLong, projectsLong } from "@/content/longform";
 import { type AppId, useUIStore } from "@/stores/uiStore";
-import { Files } from "./apps/Files";
-import { Terminal } from "./apps/Terminal";
-import { TextViewer } from "./apps/TextViewer";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
 import { Window } from "./Window";

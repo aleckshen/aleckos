@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { TerminalInput } from "@/components/TerminalInput";
+import { TerminalInput } from "@/components/ui/TerminalInput";
 import { runCommand } from "@/lib/commands";
 import { useUIStore } from "@/stores/uiStore";
 

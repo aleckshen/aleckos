@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { TerminalInput } from "@/components/TerminalInput";
+import { TerminalInput } from "@/components/ui/TerminalInput";
 import { useUIStore } from "@/stores/uiStore";
 
 const PASSPHRASE = "ssh aleckos";

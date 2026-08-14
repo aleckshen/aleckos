@@ -1,7 +1,7 @@
 "use client";
+import { Desktop } from "@/components/desktop/Desktop";
 import { useUIStore } from "@/stores/uiStore";
-import { LoginTerminal } from "./boot/LoginTerminal";
-import { Desktop } from "./Desktop";
+import { LoginTerminal } from "./LoginTerminal";
 
 export function Boot() {
   const bootPhase = useUIStore((s) => s.bootPhase);
