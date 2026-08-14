@@ -17,11 +17,15 @@ export type WindowState = {
 
 type TerminalLine = { id: string; input: string; output: string };
 
+export type BootPhase = "locked" | "booting" | "ready";
+
 type UIState = {
   windows: WindowState[];
   topZ: number;
   terminalHistory: TerminalLine[];
+  bootPhase: BootPhase;
 
+  setBootPhase: (phase: BootPhase) => void;
   openWindow: (id: AppId, title: string) => void;
   closeWindow: (id: AppId) => void;
   focusWindow: (id: AppId) => void;
@@ -40,6 +44,10 @@ export const useUIStore = create<UIState>((set) => ({
   windows: [],
   topZ: 1,
   terminalHistory: [],
+  // Flip to "ready" while working on the desktop to skip the boot flow.
+  bootPhase: "locked",
+
+  setBootPhase: (phase) => set({ bootPhase: phase }),
 
   openWindow: (id, title) =>
     set((s) => {

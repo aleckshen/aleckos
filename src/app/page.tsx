@@ -1,5 +1,5 @@
-import { Desktop } from "@/components/Desktop";
+import { Boot } from "@/components/Boot";
 
 export default function Home() {
-  return <Desktop />;
+  return <Boot />;
 }
