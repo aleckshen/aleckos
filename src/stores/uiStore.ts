@@ -26,7 +26,11 @@ type UIState = {
   bootPhase: BootPhase;
 
   setBootPhase: (phase: BootPhase) => void;
-  openWindow: (id: AppId, title: string) => void;
+  openWindow: (
+    id: AppId,
+    title: string,
+    opts?: { maximized?: boolean },
+  ) => void;
   closeWindow: (id: AppId) => void;
   focusWindow: (id: AppId) => void;
   toggleMinimize: (id: AppId) => void;
@@ -49,14 +53,21 @@ export const useUIStore = create<UIState>((set) => ({
 
   setBootPhase: (phase) => set({ bootPhase: phase }),
 
-  openWindow: (id, title) =>
+  openWindow: (id, title, opts) =>
     set((s) => {
       const existing = s.windows.find((w) => w.id === id);
       const newZ = s.topZ + 1;
       if (existing) {
         return {
           windows: s.windows.map((w) =>
-            w.id === id ? { ...w, minimized: false, zIndex: newZ } : w,
+            w.id === id
+              ? {
+                  ...w,
+                  minimized: false,
+                  zIndex: newZ,
+                  maximized: opts?.maximized ?? w.maximized,
+                }
+              : w,
           ),
           topZ: newZ,
         };
@@ -73,7 +84,7 @@ export const useUIStore = create<UIState>((set) => ({
             height: 420,
             zIndex: newZ,
             minimized: false,
-            maximized: false,
+            maximized: opts?.maximized ?? false,
           },
         ],
         topZ: newZ,

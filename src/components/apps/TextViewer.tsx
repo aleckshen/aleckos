@@ -5,8 +5,8 @@ import remarkGfm from "remark-gfm";
 
 type Props = { content: string };
 
-// Defined at module scope so their identities stay stable across renders.
-// Inline definitions would remount every rendered element on each re-render,
+// defined at module scope so their identities stay stable across renders.
+// inline definitions would remount every rendered element on each re-render,
 // which breaks in-flight clicks (the anchor's DOM node gets replaced between
 // mousedown and mouseup, so the browser never follows the link).
 const remarkPlugins = [remarkGfm];
