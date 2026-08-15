@@ -36,9 +36,9 @@ const BOOT_LINES = [
 ];
 
 /** Delay between each line appearing. */
-const LINE_MS = 130;
+const LINE_MS = 60;
 /** Pause on the finished screen before handing over to the desktop. */
-const HOLD_MS = 700;
+const HOLD_MS = 600;
 
 export function BootSequence() {
   const setBootPhase = useUIStore((s) => s.setBootPhase);
