@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { TerminalInput } from "@/components/ui/TerminalInput";
+import { useScrollToBottom } from "@/hooks/useScrollToBottom";
 import { runCommand } from "@/lib/commands";
 import { useUIStore } from "@/stores/uiStore";
 
@@ -10,11 +11,7 @@ export function Terminal() {
   const { terminalHistory, pushTerminalLine, clearTerminal, openWindow } =
     useUIStore();
   const [input, setInput] = useState("");
-  const scrollRef = useRef<HTMLLabelElement>(null);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  });
+  const scrollRef = useScrollToBottom<HTMLLabelElement>();
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
