@@ -25,6 +25,11 @@ export function LoginTerminal() {
       return;
     }
 
+    if (cmd === "clear") {
+      setHistory([]);
+      return;
+    }
+
     // An empty submit just echoes a blank prompt line, same as the terminal.
     const output =
       cmd === "" ? "" : `command not found: ${cmd.split(/\s+/)[0]}`;
