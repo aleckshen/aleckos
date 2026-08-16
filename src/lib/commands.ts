@@ -1,13 +1,13 @@
 import { profile } from "@/content/profile";
 
-const aboutText = `Hi, I'm ${profile.name}. ${profile.role}.\nType 'projects' or 'contact' for more.`;
+const aboutText = `Hi, I'm ${profile.name}. ${profile.role}.`;
 
 // hard coded will render from content folder later
 const projectsText = `1. AleckOS — this site (Next.js + Zustand + react-rnd)
 2. [Project 2] — short description
 3. [Project 3] — short description
 
-Type 'open projects' for the full write-up.`;
+Type 'open projects.md' for the full write-up.`;
 
 const contactText = `email:    ${profile.email}
 github:   ${profile.github}
@@ -20,7 +20,7 @@ const helpText = `Available commands:
   contact         Contact info
   ls              List "files"
   cat <file>      Show a file (e.g. cat about.md)
-  open <app>      Open a window (about | projects | experience)
+  open <file>     Open a file in a window (e.g. open about.md)
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
 
@@ -29,6 +29,13 @@ const files: Record<string, string> = {
   "projects.md": projectsText,
   "contact.md": contactText,
 };
+
+/** Files that `open` can launch into a window, keyed by filename. */
+const openable = {
+  "about.md": "about",
+  "projects.md": "projects",
+  "experience.md": "experience",
+} as const;
 
 export type CommandResult =
   | { kind: "text"; output: string }
@@ -61,11 +68,11 @@ export function runCommand(input: string): CommandResult {
       };
     }
     case "open": {
-      const app = args[0];
-      if (app === "about" || app === "projects" || app === "experience") {
-        return { kind: "open", app };
-      }
-      return { kind: "text", output: `open: unknown app '${app}'` };
+      const file = args[0];
+      if (!file) return { kind: "text", output: "open: missing file operand" };
+      const app = openable[file as keyof typeof openable];
+      if (app) return { kind: "open", app };
+      return { kind: "text", output: `open: ${file}: No such file` };
     }
     case "clear":
       return { kind: "clear" };
