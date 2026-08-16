@@ -54,7 +54,12 @@ export function Terminal() {
       <form onSubmit={submit} className="flex">
         <span className="text-terminal-accent">guest@aleck-os</span>
         <span className="text-terminal-dim">:~$&nbsp;</span>
-        <TerminalInput id="terminal-input" value={input} onChange={setInput} />
+        <TerminalInput
+          id="terminal-input"
+          value={input}
+          onChange={setInput}
+          focusOnMount
+        />
       </form>
     </label>
   );
