@@ -24,10 +24,11 @@ const helpText = `Available commands:
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
 
+// can probs make this section cleaner by fetching from content markdown files, but do later
 const files: Record<string, string> = {
   "about.md": aboutText,
   "projects.md": projectsText,
-  "contact.md": contactText,
+  "experience.md": contactText,
 };
 
 /** Files that `open` can launch into a window, keyed by filename. */
