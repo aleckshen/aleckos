@@ -72,8 +72,28 @@ body {
   animation: terminal-blink 1s ease-in-out infinite;
 }
 
+/* Black overlay that fades away once the desktop mounts, so the hand-off from
+   the BIOS screen is a fade rather than a hard cut. */
+@keyframes boot-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.boot-fade {
+  animation: boot-fade 600ms ease-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cursor-blink {
     animation: none;
+  }
+  /* Must still end up transparent, or the overlay would stay black. */
+  .boot-fade {
+    animation: none;
+    opacity: 0;
   }
 }
