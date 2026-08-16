@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useUIStore } from "@/stores/uiStore";
+import { BootScreen } from "./BootScreen";
 
-const BOOT_LINES = [
+export const BOOT_LINES = [
   "aleckOS BIOS v1.0",
   "Copyright (C) 2026, aleck shen",
   "",
@@ -74,14 +75,5 @@ export function BootSequence() {
     return () => clearTimeout(id);
   }, [visible, openWindow, setBootPhase]);
 
-  return (
-    <div className="h-screen w-screen overflow-hidden bg-black p-4 text-sm">
-      {BOOT_LINES.slice(0, visible).map((line, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: fixed list, never reordered
-        <pre key={i} className="whitespace-pre-wrap leading-6">
-          {line}
-        </pre>
-      ))}
-    </div>
-  );
+  return <BootScreen lines={BOOT_LINES.slice(0, visible)} />;
 }
