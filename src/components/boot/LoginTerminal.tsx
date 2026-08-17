@@ -49,18 +49,18 @@ export function LoginTerminal() {
 
       {history.map((line) => (
         <div key={line.id}>
-          <div>
-            <span className="">{PROMPT}&nbsp;</span>
+          <div className="break-words">
+            <span className="whitespace-nowrap">{PROMPT}&nbsp;</span>
             <span>{line.input}</span>
           </div>
           {line.output && (
-            <pre className="whitespace-pre-wrap">{line.output}</pre>
+            <pre className="whitespace-pre-wrap break-words">{line.output}</pre>
           )}
         </div>
       ))}
 
       <form onSubmit={submit} className="flex">
-        <span className="">{PROMPT}&nbsp;</span>
+        <span className="shrink-0 whitespace-nowrap">{PROMPT}&nbsp;</span>
         <TerminalInput
           id="login-input"
           value={input}

@@ -41,19 +41,25 @@ export function Terminal() {
       <pre className="whitespace-pre-wrap text-terminal-dim">{motd}</pre>
       {terminalHistory.map((line) => (
         <div key={line.id}>
-          <div>
-            <span className="text-terminal-accent">guest@aleck-os</span>
-            <span className="text-terminal-dim">:~$ </span>
+          <div className="break-words">
+            <span className="whitespace-nowrap">
+              <span className="text-terminal-accent">guest@aleck-os</span>
+              <span className="text-terminal-dim">:~$ </span>
+            </span>
             <span>{line.input}</span>
           </div>
           {line.output && (
-            <pre className="whitespace-pre-wrap">{line.output}</pre>
+            <pre className="whitespace-pre-wrap break-words">{line.output}</pre>
           )}
         </div>
       ))}
       <form onSubmit={submit} className="flex">
-        <span className="text-terminal-accent">guest@aleck-os</span>
-        <span className="text-terminal-dim">:~$&nbsp;</span>
+        <span className="shrink-0 whitespace-nowrap text-terminal-accent">
+          guest@aleck-os
+        </span>
+        <span className="shrink-0 whitespace-nowrap text-terminal-dim">
+          :~$&nbsp;
+        </span>
         <TerminalInput
           id="terminal-input"
           value={input}
