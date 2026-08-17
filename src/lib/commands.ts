@@ -1,24 +1,20 @@
 import { type DocId, documents } from "@/content/documents";
-import { profile } from "@/content/profile";
 
-const aboutText = `Hi, I'm ${profile.name}. ${profile.role}.`;
+const aboutText = `Hi, I'm Aleck! I'm a third year computer science major studying at the University of Auckland.
+
+Type 'open about.md' for more about me!`;
 
 // hard coded will render from content folder later
-const projectsText = `1. AleckOS — this site (Next.js + Zustand + react-rnd)
-2. [Project 2] — short description
-3. [Project 3] — short description
+const projectsText = `1. uoavc (university of auckland volleyball club website)
+2. pylib (python cli tool)
+3. aleckos (os themed website)
 
 Type 'open projects.md' for the full write-up.`;
-
-const contactText = `email:    ${profile.email}
-github:   ${profile.github}
-linkedin: ${profile.linkedin}`;
 
 const helpText = `Available commands:
   help            Show this message
   about           About me
   projects        List projects
-  contact         Contact info
   ls              List "files"
   open <file>     Open a file in a window (e.g. open about.md)
   clear           Clear the terminal
@@ -41,8 +37,6 @@ export function runCommand(input: string): CommandResult {
       return { kind: "text", output: aboutText };
     case "projects":
       return { kind: "text", output: projectsText };
-    case "contact":
-      return { kind: "text", output: contactText };
     case "whoami":
       return { kind: "text", output: "guest@aleck-os" };
     case "ls":
