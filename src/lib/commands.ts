@@ -15,8 +15,8 @@ const helpText = `Available commands:
   help            Show this message
   about           About me
   projects        List projects
-  ls              List "files"
-  open <file>     Open a file in a window (e.g. open about.md)
+  ls              List "files" (use with open)
+  open <file>     Open a file (e.g. open about.md)
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
 
