@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import type { DocId } from "@/content/documents";
 
-export type AppId = "terminal" | "files" | "about" | "projects" | "experience";
+export type AppId = "terminal" | "files" | DocId;
 
 export type WindowState = {
   id: AppId;

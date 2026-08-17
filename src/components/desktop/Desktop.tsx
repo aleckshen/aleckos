@@ -3,11 +3,20 @@ import { useState } from "react";
 import { Files } from "@/components/apps/Files";
 import { Terminal } from "@/components/apps/Terminal";
 import { TextViewer } from "@/components/apps/TextViewer";
-import { aboutLong, experienceLong, projectsLong } from "@/content/longform";
+import { documents } from "@/content/documents";
 import { type AppId, useUIStore } from "@/stores/uiStore";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
 import { Window } from "./Window";
+
+/** Maps a window id to whatever should render inside it. */
+function WindowContent({ id }: { id: AppId }) {
+  if (id === "terminal") return <Terminal />;
+  if (id === "files") return <Files />;
+
+  const doc = documents.find((d) => d.id === id);
+  return doc ? <TextViewer content={doc.content} /> : null;
+}
 
 export function Desktop() {
   const windows = useUIStore((s) => s.windows);
@@ -41,11 +50,7 @@ export function Desktop() {
 
       {windows.map((w) => (
         <Window key={w.id} window={w}>
-          {w.id === "terminal" && <Terminal />}
-          {w.id === "files" && <Files />}
-          {w.id === "about" && <TextViewer content={aboutLong} />}
-          {w.id === "projects" && <TextViewer content={projectsLong} />}
-          {w.id === "experience" && <TextViewer content={experienceLong} />}
+          <WindowContent id={w.id} />
         </Window>
       ))}
 

@@ -1,11 +1,6 @@
 "use client";
-import { type AppId, useUIStore } from "@/stores/uiStore";
-
-const files: { id: AppId; title: string; name: string }[] = [
-  { id: "about", title: "about", name: "about.md" },
-  { id: "projects", title: "projects", name: "projects.md" },
-  { id: "experience", title: "experience", name: "experience.md" },
-];
+import { documents } from "@/content/documents";
+import { useUIStore } from "@/stores/uiStore";
 
 export function Files() {
   const openWindow = useUIStore((s) => s.openWindow);
@@ -15,14 +10,14 @@ export function Files() {
         ~/documents
       </div>
       <div>
-        {files.map((f) => (
+        {documents.map((d) => (
           <button
-            key={f.id}
+            key={d.id}
             type="button"
-            onDoubleClick={() => openWindow(f.id, f.title)}
+            onDoubleClick={() => openWindow(d.id, d.title)}
             className="block w-full px-3 py-1.5 text-left text-terminal-fg hover:bg-white/10"
           >
-            {f.name}
+            {d.file}
           </button>
         ))}
       </div>

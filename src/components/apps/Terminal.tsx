@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { TerminalInput } from "@/components/ui/TerminalInput";
+import { documents } from "@/content/documents";
 import { useScrollToBottom } from "@/hooks/useScrollToBottom";
 import { runCommand } from "@/lib/commands";
 import { useUIStore } from "@/stores/uiStore";
@@ -19,12 +20,8 @@ export function Terminal() {
     if (result.kind === "clear") {
       clearTerminal();
     } else if (result.kind === "open") {
-      const titles = {
-        about: "About",
-        projects: "Projects",
-        experience: "Experience",
-      };
-      openWindow(result.app, titles[result.app]);
+      const doc = documents.find((d) => d.id === result.app);
+      openWindow(result.app, doc?.title ?? result.app);
       pushTerminalLine({ input, output: `opening ${result.app}...` });
     } else {
       pushTerminalLine({ input, output: result.output });

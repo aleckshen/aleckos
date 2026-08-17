@@ -1,3 +1,4 @@
+import { type DocId, documents } from "@/content/documents";
 import { profile } from "@/content/profile";
 
 const aboutText = `Hi, I'm ${profile.name}. ${profile.role}.`;
@@ -23,17 +24,10 @@ const helpText = `Available commands:
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
 
-/** Files that `open` can launch into a window, keyed by filename. */
-const openable = {
-  "about.md": "about",
-  "projects.md": "projects",
-  "experience.md": "experience",
-} as const;
-
 export type CommandResult =
   | { kind: "text"; output: string }
   | { kind: "clear" }
-  | { kind: "open"; app: "about" | "projects" | "experience" };
+  | { kind: "open"; app: DocId };
 
 export function runCommand(input: string): CommandResult {
   const [cmd, ...args] = input.trim().split(/\s+/);
@@ -51,12 +45,12 @@ export function runCommand(input: string): CommandResult {
     case "whoami":
       return { kind: "text", output: "guest@aleck-os" };
     case "ls":
-      return { kind: "text", output: Object.keys(openable).join("  ") };
+      return { kind: "text", output: documents.map((d) => d.file).join("  ") };
     case "open": {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
-      const app = openable[file as keyof typeof openable];
-      if (app) return { kind: "open", app };
+      const doc = documents.find((d) => d.file === file);
+      if (doc) return { kind: "open", app: doc.id };
       return { kind: "text", output: `open: ${file}: No such file` };
     }
     case "clear":
