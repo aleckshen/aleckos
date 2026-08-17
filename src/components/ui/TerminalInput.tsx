@@ -22,6 +22,8 @@ export function TerminalInput({
   focusOnMount = false,
 }: Props) {
   const [caret, setCaret] = useState(0);
+  // How far the input has scrolled itself once the text outgrows the box.
+  const [scrollLeft, setScrollLeft] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Clamped so the block snaps back when the parent clears the value.
@@ -33,10 +35,11 @@ export function TerminalInput({
 
   function syncCaret(el: HTMLInputElement) {
     setCaret(el.selectionStart ?? el.value.length);
+    setScrollLeft(el.scrollLeft);
   }
 
   return (
-    <span className="relative h-5 flex-1">
+    <span className="relative h-5 flex-1 overflow-hidden">
       <input
         id={id}
         ref={inputRef}
@@ -48,7 +51,10 @@ export function TerminalInput({
         onClick={(e) => syncCaret(e.currentTarget)}
         onKeyUp={(e) => syncCaret(e.currentTarget)}
         onSelect={(e) => syncCaret(e.currentTarget)}
-        className="peer w-full bg-transparent caret-transparent outline-none"
+        onScroll={(e) => setScrollLeft(e.currentTarget.scrollLeft)}
+        // Narrower than the wrapper by the caret's width, so the block still
+        // has room to render once the text scrolls to the right-hand edge.
+        className="peer w-[calc(100%-0.75ch)] bg-transparent caret-transparent outline-none"
         spellCheck={false}
         autoComplete="off"
         autoCorrect="off"
@@ -57,7 +63,7 @@ export function TerminalInput({
       <span
         aria-hidden="true"
         className="cursor-blink invisible pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-current peer-focus:visible"
-        style={{ left: `${caretPos}ch` }}
+        style={{ left: `calc(${caretPos}ch - ${scrollLeft}px)` }}
       />
     </span>
   );
