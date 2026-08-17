@@ -23,6 +23,9 @@ export function Terminal() {
       const doc = documents.find((d) => d.id === result.app);
       openWindow(result.app, doc?.title ?? result.app);
       pushTerminalLine({ input, output: `opening ${result.app}...` });
+    } else if (result.kind === "external") {
+      window.open(result.url, "_blank");
+      pushTerminalLine({ input, output: `opening ${result.file}...` });
     } else {
       pushTerminalLine({ input, output: result.output });
     }

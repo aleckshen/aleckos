@@ -15,7 +15,7 @@ function WindowContent({ id }: { id: AppId }) {
   if (id === "files") return <Files />;
 
   const doc = documents.find((d) => d.id === id);
-  return doc ? <TextViewer content={doc.content} /> : null;
+  return doc?.kind === "markdown" ? <TextViewer content={doc.content} /> : null;
 }
 
 export function Desktop() {

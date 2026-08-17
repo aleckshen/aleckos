@@ -27,7 +27,8 @@ const helpText = `Available commands:
 export type CommandResult =
   | { kind: "text"; output: string }
   | { kind: "clear" }
-  | { kind: "open"; app: DocId };
+  | { kind: "open"; app: DocId }
+  | { kind: "external"; url: string; file: string };
 
 export function runCommand(input: string): CommandResult {
   const [cmd, ...args] = input.trim().split(/\s+/);
@@ -50,8 +51,11 @@ export function runCommand(input: string): CommandResult {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
       const doc = documents.find((d) => d.file === file);
-      if (doc) return { kind: "open", app: doc.id };
-      return { kind: "text", output: `open: ${file}: No such file` };
+      if (!doc) return { kind: "text", output: `open: ${file}: No such file` };
+      if (doc.kind === "external") {
+        return { kind: "external", url: doc.url, file: doc.file };
+      }
+      return { kind: "open", app: doc.id };
     }
     case "clear":
       return { kind: "clear" };
