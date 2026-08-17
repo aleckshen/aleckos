@@ -19,17 +19,9 @@ const helpText = `Available commands:
   projects        List projects
   contact         Contact info
   ls              List "files"
-  cat <file>      Show a file (e.g. cat about.md)
   open <file>     Open a file in a window (e.g. open about.md)
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
-
-// can probs make this section cleaner by fetching from content markdown files, but do later
-const files: Record<string, string> = {
-  "about.md": aboutText,
-  "projects.md": projectsText,
-  "experience.md": contactText,
-};
 
 /** Files that `open` can launch into a window, keyed by filename. */
 const openable = {
@@ -59,15 +51,7 @@ export function runCommand(input: string): CommandResult {
     case "whoami":
       return { kind: "text", output: "guest@aleck-os" };
     case "ls":
-      return { kind: "text", output: Object.keys(files).join("  ") };
-    case "cat": {
-      const file = args[0];
-      if (!file) return { kind: "text", output: "cat: missing file operand" };
-      return {
-        kind: "text",
-        output: files[file] ?? `cat: ${file}: No such file`,
-      };
-    }
+      return { kind: "text", output: Object.keys(openable).join("  ") };
     case "open": {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
