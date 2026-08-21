@@ -52,9 +52,11 @@ export function TerminalInput({
         onKeyUp={(e) => syncCaret(e.currentTarget)}
         onSelect={(e) => syncCaret(e.currentTarget)}
         onScroll={(e) => setScrollLeft(e.currentTarget.scrollLeft)}
-        // Narrower than the wrapper by the caret's width, so the block still
-        // has room to render once the text scrolls to the right-hand edge.
-        className="peer w-[calc(100%-0.75ch)] bg-transparent caret-transparent outline-none"
+        // Desktop only: hide the native caret (the block replaces it) and leave
+        // room at the right edge for the block to render once text scrolls.
+        // Mobile keeps the native caret, since virtual keyboards don't fire the
+        // selection events the block relies on to track position.
+        className="peer w-full bg-transparent outline-none md:w-[calc(100%-0.75ch)] md:caret-transparent"
         spellCheck={false}
         autoComplete="off"
         autoCorrect="off"
@@ -62,7 +64,7 @@ export function TerminalInput({
       />
       <span
         aria-hidden="true"
-        className="cursor-blink invisible pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-current peer-focus:visible"
+        className="cursor-blink invisible pointer-events-none absolute top-1/2 h-4 w-[0.75ch] -translate-y-1/2 bg-current md:peer-focus:visible"
         style={{ left: `calc(${caretPos}ch - ${scrollLeft}px)` }}
       />
     </span>
