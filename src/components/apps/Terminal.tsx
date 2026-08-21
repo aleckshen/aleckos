@@ -34,7 +34,8 @@ export function Terminal() {
 
   return (
     <label
-      className="block h-full overflow-y-auto bg-terminal-bg p-3 text-sm"
+      // text-base on mobile: iOS zooms in on focus when inputs are under 16px.
+      className="block h-full overflow-y-auto bg-terminal-bg p-3 text-base md:text-sm"
       htmlFor="terminal-input"
       ref={scrollRef}
     >

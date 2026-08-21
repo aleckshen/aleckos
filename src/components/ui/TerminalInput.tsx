@@ -39,7 +39,7 @@ export function TerminalInput({
   }
 
   return (
-    <span className="relative h-5 flex-1 overflow-hidden">
+    <span className="relative h-6 flex-1 overflow-hidden md:h-5">
       <input
         id={id}
         ref={inputRef}
