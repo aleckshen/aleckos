@@ -26,7 +26,7 @@ export function Desktop() {
     // biome-ignore lint/a11y/noStaticElementInteractions: click-off-to-deselect convenience, not a real control
     // biome-ignore lint/a11y/useKeyWithClickEvents: no keyboard equivalent needed
     <div
-      className="relative h-screen w-screen overflow-hidden bg-desktop-bg"
+      className="relative h-dvh w-screen overflow-hidden bg-desktop-bg"
       onClick={() => setSelectedIcon(null)}
     >
       <div className="absolute left-4 top-4 grid grid-cols-1 gap-3">

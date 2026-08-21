@@ -15,7 +15,7 @@ type Props = {
 export function BootScreen({ lines, className = "" }: Props) {
   return (
     <div
-      className={`h-screen w-screen overflow-hidden bg-black p-4 text-sm ${className}`}
+      className={`h-dvh w-screen overflow-hidden bg-black p-4 text-sm ${className}`}
     >
       {lines.map((line, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: fixed list, never reordered

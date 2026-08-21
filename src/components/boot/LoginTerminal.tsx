@@ -42,7 +42,7 @@ export function LoginTerminal() {
   return (
     <label
       // text-base on mobile: iOS zooms in on focus when inputs are under 16px.
-      className="block h-screen w-screen overflow-y-auto bg-black p-4 text-base md:text-sm"
+      className="block h-dvh w-screen overflow-y-auto bg-black p-4 text-base md:text-sm"
       htmlFor="login-input"
       ref={scrollRef}
     >
