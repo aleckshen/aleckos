@@ -43,7 +43,7 @@ export function LoginTerminal() {
     <label
       // text-base on mobile: iOS zooms in on focus when inputs are under 16px.
       className="block h-dvh w-screen overflow-y-auto bg-black p-4 text-base md:text-sm"
-      htmlFor="login-input"
+      htmlFor="boot-input"
       ref={scrollRef}
     >
       <p className="">hint: type 'ssh aleckos'</p>
@@ -63,7 +63,7 @@ export function LoginTerminal() {
       <form onSubmit={submit} className="flex">
         <span className="shrink-0 whitespace-nowrap">{PROMPT}&nbsp;</span>
         <TerminalInput
-          id="login-input"
+          id="boot-input"
           value={input}
           onChange={setInput}
           focusOnMount

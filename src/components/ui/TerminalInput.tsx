@@ -58,9 +58,14 @@ export function TerminalInput({
         // selection events the block relies on to track position.
         className="peer w-full bg-transparent outline-none md:w-[calc(100%-0.75ch)] md:caret-transparent"
         spellCheck={false}
+        // Password managers ignore autoComplete="off" on anything that looks
+        // like a login, so these opt out of 1Password and LastPass explicitly.
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
+        data-1p-ignore
+        data-lpignore="true"
+        data-form-type="other"
       />
       <span
         aria-hidden="true"
