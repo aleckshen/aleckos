@@ -38,6 +38,14 @@ body {
   background: var(--color-terminal-accent);
   color: var(--color-terminal-bg);
 }
+/* Scrollable strips that have their own controls, like the taskbar tabs. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
