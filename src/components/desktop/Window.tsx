@@ -28,7 +28,7 @@ export function Window({ window, children }: Props) {
       position={
         window.maximized ? { x: 0, y: 0 } : { x: window.x, y: window.y }
       }
-      minWidth={320}
+      minWidth={280}
       minHeight={200}
       bounds="parent"
       disableDragging={window.maximized}
