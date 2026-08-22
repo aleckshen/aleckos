@@ -26,8 +26,25 @@ export type CommandResult =
   | { kind: "open"; app: DocId }
   | { kind: "external"; url: string; file: string };
 
+/** Every command except `open` takes no arguments. */
+const NO_ARG_COMMANDS = new Set([
+  "help",
+  "about",
+  "projects",
+  "whoami",
+  "ls",
+  "clear",
+]);
+
 export function runCommand(input: string): CommandResult {
   const [cmd, ...args] = input.trim().split(/\s+/);
+
+  // Checked before the switch so unknown commands still fall through to
+  // "command not found" rather than complaining about their arguments.
+  if (NO_ARG_COMMANDS.has(cmd) && args.length > 0) {
+    return { kind: "text", output: `${cmd}: too many arguments` };
+  }
+
   switch (cmd) {
     case "":
       return { kind: "text", output: "" };
@@ -44,6 +61,9 @@ export function runCommand(input: string): CommandResult {
     case "open": {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
+      if (args.length > 1) {
+        return { kind: "text", output: "open: too many arguments" };
+      }
       const doc = documents.find((d) => d.file === file);
       if (!doc) return { kind: "text", output: `open: ${file}: No such file` };
       if (doc.kind === "external") {
