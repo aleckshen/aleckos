@@ -1,12 +1,34 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { TerminalInput } from "@/components/ui/TerminalInput";
 import { documents } from "@/content/documents";
 import { useScrollToBottom } from "@/hooks/useScrollToBottom";
-import { runCommand } from "@/lib/commands";
+import { COMMANDS, runCommand } from "@/lib/commands";
 import { useUIStore } from "@/stores/uiStore";
 
 const motd = `aleck-os v1.0 — type 'help' to get started.\n`;
+
+/**
+ * Real grid columns rather than space-padded text: a description too long for
+ * the window wraps within its own column instead of back to the left margin.
+ */
+function CommandList() {
+  return (
+    <div>
+      <p>Available commands:</p>
+      <div className="grid grid-cols-[auto_1fr] gap-x-[3ch] pl-[2ch]">
+        {COMMANDS.map((c) => (
+          <Fragment key={c.name}>
+            <span className="whitespace-nowrap">
+              {c.arg ? `${c.name} ${c.arg}` : c.name}
+            </span>
+            <span className="min-w-0 break-words">{c.description}</span>
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Terminal() {
   const { terminalHistory, pushTerminalLine, clearTerminal, openWindow } =
@@ -19,15 +41,26 @@ export function Terminal() {
     const result = runCommand(input);
     if (result.kind === "clear") {
       clearTerminal();
+    } else if (result.kind === "help") {
+      pushTerminalLine({ input, output: { kind: "help" } });
     } else if (result.kind === "open") {
       const doc = documents.find((d) => d.id === result.app);
       openWindow(result.app, doc?.title ?? result.app);
-      pushTerminalLine({ input, output: `opening ${result.app}...` });
+      pushTerminalLine({
+        input,
+        output: { kind: "text", text: `opening ${result.app}...` },
+      });
     } else if (result.kind === "external") {
       window.open(result.url, "_blank");
-      pushTerminalLine({ input, output: `opening ${result.file}...` });
+      pushTerminalLine({
+        input,
+        output: { kind: "text", text: `opening ${result.file}...` },
+      });
     } else {
-      pushTerminalLine({ input, output: result.output });
+      pushTerminalLine({
+        input,
+        output: { kind: "text", text: result.output },
+      });
     }
     setInput("");
   }
@@ -49,8 +82,14 @@ export function Terminal() {
             </span>
             <span>{line.input}</span>
           </div>
-          {line.output && (
-            <pre className="whitespace-pre-wrap break-words">{line.output}</pre>
+          {line.output.kind === "help" ? (
+            <CommandList />
+          ) : (
+            line.output.text && (
+              <pre className="whitespace-pre-wrap break-words">
+                {line.output.text}
+              </pre>
+            )
           )}
         </div>
       ))}

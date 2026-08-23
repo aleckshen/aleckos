@@ -16,7 +16,10 @@ export type WindowState = {
   prevGeometry?: { x: number; y: number; width: number; height: number };
 };
 
-type TerminalLine = { id: string; input: string; output: string };
+/** `help` renders as a two-column layout rather than text, so it can't be a string. */
+export type TerminalOutput = { kind: "text"; text: string } | { kind: "help" };
+
+type TerminalLine = { id: string; input: string; output: TerminalOutput };
 
 export type BootPhase = "locked" | "booting" | "ready";
 

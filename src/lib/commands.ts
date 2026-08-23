@@ -11,32 +11,35 @@ const projectsText = `1. uoavc (university of auckland volleyball club website)
 
 Type 'open projects.md' for the full write-up.`;
 
-const helpText = `Available commands:
-  help            Show this message
-  about           About me
-  projects        List projects
-  ls              List "files"
-  pwd             Print working directory
-  open <file>     Open a file
-  clear           Clear the terminal
-  whoami          ¯\\_(ツ)_/¯`;
+export type CommandSpec = {
+  name: string;
+  /** Operand shown in `help`; its absence is what makes a command no-arg. */
+  arg?: string;
+  description: string;
+};
+
+/** Drives both the `help` listing and argument checking. */
+export const COMMANDS: CommandSpec[] = [
+  { name: "help", description: "Show this message" },
+  { name: "about", description: "About me" },
+  { name: "projects", description: "List projects" },
+  { name: "ls", description: 'List "files"' },
+  { name: "pwd", description: "Print working directory" },
+  { name: "open", arg: "<file>", description: "Open a file" },
+  { name: "clear", description: "Clear the terminal" },
+  { name: "whoami", description: "¯\\_(ツ)_/¯" },
+];
 
 export type CommandResult =
   | { kind: "text"; output: string }
+  | { kind: "help" }
   | { kind: "clear" }
   | { kind: "open"; app: DocId }
   | { kind: "external"; url: string; file: string };
 
-/** Every command except `open` takes no arguments. */
-const NO_ARG_COMMANDS = new Set([
-  "help",
-  "about",
-  "projects",
-  "whoami",
-  "ls",
-  "clear",
-  "pwd",
-]);
+const NO_ARG_COMMANDS = new Set(
+  COMMANDS.filter((c) => !c.arg).map((c) => c.name),
+);
 
 export function runCommand(input: string): CommandResult {
   const [cmd, ...args] = input.trim().split(/\s+/);
@@ -51,7 +54,7 @@ export function runCommand(input: string): CommandResult {
     case "":
       return { kind: "text", output: "" };
     case "help":
-      return { kind: "text", output: helpText };
+      return { kind: "help" };
     case "about":
       return { kind: "text", output: aboutText };
     case "projects":
