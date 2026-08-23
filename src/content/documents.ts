@@ -1,4 +1,5 @@
 import aboutMd from "./markdown/about.md";
+import contactMd from "./markdown/contact.md";
 import experienceMd from "./markdown/experience.md";
 import projectsMd from "./markdown/projects.md";
 
@@ -30,6 +31,13 @@ export const documents = [
     file: "experience.md",
     title: "experience",
     content: experienceMd,
+  },
+  {
+    kind: "markdown",
+    id: "contact",
+    file: "contact.md",
+    title: "contact",
+    content: contactMd,
   },
   {
     kind: "external",
