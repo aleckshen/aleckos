@@ -8,6 +8,9 @@ import { useUIStore } from "@/stores/uiStore";
 
 const motd = `aleck-os v1.0 — type 'help' to get started.\n`;
 
+/** Lets the "opening ..." line land before the window appears. */
+const OPEN_DELAY_MS = 750;
+
 /**
  * Real grid columns rather than space-padded text: a description too long for
  * the window wraps within its own column instead of back to the left margin.
@@ -45,11 +48,16 @@ export function Terminal() {
       pushTerminalLine({ input, output: { kind: "help" } });
     } else if (result.kind === "open") {
       const doc = documents.find((d) => d.id === result.app);
-      openWindow(result.app, doc?.title ?? result.app);
       pushTerminalLine({
         input,
         output: { kind: "text", text: `opening ${result.app}...` },
       });
+      // Fires even if the terminal is closed meanwhile: the command was
+      // issued, and openWindow is store state rather than component state.
+      setTimeout(
+        () => openWindow(result.app, doc?.title ?? result.app),
+        OPEN_DELAY_MS,
+      );
     } else if (result.kind === "external") {
       window.open(result.url, "_blank");
       pushTerminalLine({
