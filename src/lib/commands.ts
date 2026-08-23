@@ -16,6 +16,7 @@ const helpText = `Available commands:
   about           About me
   projects        List projects
   ls              List "files"
+  pwd             Print working directory
   open <file>     Open a file
   clear           Clear the terminal
   whoami          ¯\\_(ツ)_/¯`;
@@ -34,6 +35,7 @@ const NO_ARG_COMMANDS = new Set([
   "whoami",
   "ls",
   "clear",
+  "pwd",
 ]);
 
 export function runCommand(input: string): CommandResult {
@@ -58,6 +60,8 @@ export function runCommand(input: string): CommandResult {
       return { kind: "text", output: "guest@aleck-os" };
     case "ls":
       return { kind: "text", output: documents.map((d) => d.file).join("  ") };
+    case "pwd":
+      return { kind: "text", output: "/home/guest" };
     case "open": {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
