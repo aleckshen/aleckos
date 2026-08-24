@@ -36,6 +36,7 @@ type UIState = {
     opts?: { maximized?: boolean },
   ) => void;
   closeWindow: (id: AppId) => void;
+  closeAllWindows: () => void;
   focusWindow: (id: AppId) => void;
   toggleMinimize: (id: AppId) => void;
   toggleMaximize: (id: AppId) => void;
@@ -136,6 +137,8 @@ export const useUIStore = create<UIState>((set) => ({
 
   closeWindow: (id) =>
     set((s) => ({ windows: s.windows.filter((w) => w.id !== id) })),
+
+  closeAllWindows: () => set({ windows: [] }),
 
   focusWindow: (id) =>
     set((s) => {
