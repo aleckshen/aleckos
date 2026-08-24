@@ -65,6 +65,19 @@ export function runCommand(input: string): CommandResult {
       return { kind: "text", output: documents.map((d) => d.file).join("  ") };
     case "pwd":
       return { kind: "text", output: "/home/guest" };
+    case "cd": {
+      const target = args[0];
+      // Bare `cd` goes home, and home is the only directory there is, so it
+      // prints nothing rather than pretending to have moved.
+      if (!target) return { kind: "text", output: "" };
+      if (args.length > 1) {
+        return { kind: "text", output: "cd: too many arguments" };
+      }
+      return {
+        kind: "text",
+        output: `cd: no such file or directory: ${target}`,
+      };
+    }
     case "open": {
       const file = args[0];
       if (!file) return { kind: "text", output: "open: missing file operand" };
