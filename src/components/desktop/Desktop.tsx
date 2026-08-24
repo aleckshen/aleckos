@@ -76,6 +76,7 @@ export function Desktop() {
           selected={selectedIcon === "terminal"}
           onSelect={() => setSelectedIcon("terminal")}
           onOpen={() => setSelectedIcon(null)}
+          onContextMenu={openMenu}
         />
         <DesktopIcon
           id="files"
@@ -84,6 +85,7 @@ export function Desktop() {
           selected={selectedIcon === "files"}
           onSelect={() => setSelectedIcon("files")}
           onOpen={() => setSelectedIcon(null)}
+          onContextMenu={openMenu}
         />
       </div>
 
