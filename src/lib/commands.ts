@@ -28,6 +28,7 @@ export const COMMANDS: CommandSpec[] = [
   { name: "open", arg: "<file>", description: "Open a file" },
   { name: "clear", description: "Clear the terminal" },
   { name: "close", description: "Close the terminal" },
+  { name: "exit", description: "Exit virtual machine" },
   { name: "whoami", description: "¯\\_(ツ)_/¯" },
 ];
 
@@ -36,6 +37,7 @@ export type CommandResult =
   | { kind: "help" }
   | { kind: "clear" }
   | { kind: "close" }
+  | { kind: "exit" }
   | { kind: "open"; app: DocId }
   | { kind: "external"; url: string; file: string };
 
@@ -97,6 +99,8 @@ export function runCommand(input: string): CommandResult {
       return { kind: "clear" };
     case "close":
       return { kind: "close" };
+    case "exit":
+      return { kind: "exit" };
     default:
       return { kind: "text", output: `command not found: ${cmd}. Try 'help'.` };
   }

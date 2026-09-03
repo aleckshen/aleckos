@@ -37,6 +37,7 @@ type UIState = {
   ) => void;
   closeWindow: (id: AppId) => void;
   closeAllWindows: () => void;
+  logOut: () => void;
   focusWindow: (id: AppId) => void;
   toggleMinimize: (id: AppId) => void;
   toggleMaximize: (id: AppId) => void;
@@ -139,6 +140,16 @@ export const useUIStore = create<UIState>((set) => ({
     set((s) => ({ windows: s.windows.filter((w) => w.id !== id) })),
 
   closeAllWindows: () => set({ windows: [] }),
+
+  // Back to the login prompt with nothing carried over, so logging in again
+  // replays the boot sequence onto a clean desktop rather than the last one.
+  logOut: () =>
+    set({
+      windows: [],
+      topZ: 1,
+      terminalHistory: [],
+      bootPhase: "locked",
+    }),
 
   focusWindow: (id) =>
     set((s) => {

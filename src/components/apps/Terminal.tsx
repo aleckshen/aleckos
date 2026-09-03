@@ -40,6 +40,7 @@ export function Terminal() {
     clearTerminal,
     openWindow,
     closeWindow,
+    logOut,
   } = useUIStore();
   const [input, setInput] = useState("");
   const scrollRef = useScrollToBottom<HTMLLabelElement>();
@@ -51,6 +52,8 @@ export function Terminal() {
       clearTerminal();
     } else if (result.kind === "close") {
       closeWindow("terminal");
+    } else if (result.kind === "exit") {
+      logOut();
     } else if (result.kind === "help") {
       pushTerminalLine({ input, output: { kind: "help" } });
     } else if (result.kind === "open") {
