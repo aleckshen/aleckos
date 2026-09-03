@@ -34,8 +34,13 @@ function CommandList() {
 }
 
 export function Terminal() {
-  const { terminalHistory, pushTerminalLine, clearTerminal, openWindow } =
-    useUIStore();
+  const {
+    terminalHistory,
+    pushTerminalLine,
+    clearTerminal,
+    openWindow,
+    closeWindow,
+  } = useUIStore();
   const [input, setInput] = useState("");
   const scrollRef = useScrollToBottom<HTMLLabelElement>();
 
@@ -44,6 +49,8 @@ export function Terminal() {
     const result = runCommand(input);
     if (result.kind === "clear") {
       clearTerminal();
+    } else if (result.kind === "close") {
+      closeWindow("terminal");
     } else if (result.kind === "help") {
       pushTerminalLine({ input, output: { kind: "help" } });
     } else if (result.kind === "open") {
