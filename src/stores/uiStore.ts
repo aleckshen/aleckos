@@ -28,7 +28,10 @@ type UIState = {
   topZ: number;
   terminalHistory: TerminalLine[];
   bootPhase: BootPhase;
+  /** False until localStorage has been read, so nothing renders on a guess. */
+  hydrated: boolean;
 
+  hydrate: () => void;
   setBootPhase: (phase: BootPhase) => void;
   openWindow: (
     id: AppId,
@@ -49,6 +52,12 @@ type UIState = {
   pushTerminalLine: (line: Omit<TerminalLine, "id">) => void;
   clearTerminal: () => void;
 };
+
+/**
+ * Marks that the desktop has been reached, so a refresh lands straight back on
+ * it. Removed by `logOut`, which is what makes `exit` survive a reload too.
+ */
+const READY_KEY = "aleckos:ready";
 
 /** Matches Tailwind's `md`, below which floating windows stop fitting. */
 const MOBILE_BREAKPOINT = 768;
@@ -98,8 +107,21 @@ export const useUIStore = create<UIState>((set) => ({
   terminalHistory: [],
   // Flip to "ready" while working on the desktop to skip the boot flow.
   bootPhase: "locked",
+  hydrated: false,
 
-  setBootPhase: (phase) => set({ bootPhase: phase }),
+  // Only ever called from an effect: localStorage doesn't exist on the server,
+  // and reading it during render would mismatch the prerendered HTML.
+  hydrate: () =>
+    set({
+      hydrated: true,
+      bootPhase: localStorage.getItem(READY_KEY) === "1" ? "ready" : "locked",
+    }),
+
+  setBootPhase: (phase) => {
+    // "booting" is a transient animation, so only the desktop is remembered.
+    if (phase === "ready") localStorage.setItem(READY_KEY, "1");
+    set({ bootPhase: phase });
+  },
 
   openWindow: (id, title, opts) =>
     set((s) => {
@@ -143,13 +165,15 @@ export const useUIStore = create<UIState>((set) => ({
 
   // Back to the login prompt with nothing carried over, so logging in again
   // replays the boot sequence onto a clean desktop rather than the last one.
-  logOut: () =>
+  logOut: () => {
+    localStorage.removeItem(READY_KEY);
     set({
       windows: [],
       topZ: 1,
       terminalHistory: [],
       bootPhase: "locked",
-    }),
+    });
+  },
 
   focusWindow: (id) =>
     set((s) => {
